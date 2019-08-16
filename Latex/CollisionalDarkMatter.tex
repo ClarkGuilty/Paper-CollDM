@@ -241,7 +241,7 @@ In this section we present a series of numerical tests using our implementation 
 \label{sec: test_gauss}
 We initialize the phase space grid with a Gaussian distribution given by:
 \begin{equation}
-f(x,v,t = 0) = 4 exp(-\frac{-x^2-v^2}{0.08})
+f(x,v,t = 0) = 4 exp(-\frac{-x^2-v^2}{0.08}),
 \end{equation} 
 in a two dimensional phase space defined by $x \in [-1,1]$ and $v \in [-1,1]$.
 The biggest concentration of mass is on the spatial origin, therefore the potential minima is also on the origin.
@@ -259,7 +259,7 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.75]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
+    \includegraphics[scale=0.8]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
     \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}
     \label{fig: Gauss_test}
 \end{figure}
@@ -267,13 +267,14 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 
 
 \subsection{Test II: Jeans Instability}
-We initialize the phase space grid with a uniform density along with a periodic perturbation and a Gaussian velocity profile:
+We initialize the phase space grid with a uniform density along with a periodic spatial perturbation and a Gaussian velocity profile:
 \begin{equation}
-f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma}) (1 + A\cos(kx)) 
+f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma}) (1 + A\cos(kx)).
 \end{equation} 
+In a phase space defined by the same domain of section \ref{sec: test_gauss}. Depending on the value of $k$ the perturbations will collapse or will be wiped by Landau dampening.
+
 
 TODO
-
 \section{Conclusions}
 
 TODO
