@@ -269,12 +269,11 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 \subsection{Test II: Jeans Instability}
 We initialize the phase space grid with a uniform density along with a periodic spatial perturbation and a Gaussian velocity profile:
 \begin{equation}
-f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma}) (1 + A\cos(kx)).
+f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma^2}) (1 + A\cos(kx)).
 \end{equation} 
-In a phase space defined by the same domain of section \ref{sec: test_gauss}. Depending on the value of $k$ the perturbations will collapse or will be wiped by Landau dampening.
+In a phase space defined by the same domain of section \ref{sec: test_gauss}. This initialization is equivalent to a uniform distribution with a small periodic perturbation on $x = 0$. Depending on the value of $k$ the perturbations will collapse or will be wiped by Landau dampening. The critical behaviour is defined by the ratio of $k$ and $k_j$
 
 
-TODO
 \section{Conclusions}
 
 TODO
