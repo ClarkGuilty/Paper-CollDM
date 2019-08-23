@@ -30,26 +30,32 @@ JEANS = -137
 GAUSS = -127
 dt = 0.4
 
-dat = np.loadtxt("./gauss_nocol/grid0.dat").T
-#density = np.loadtxt("density.dat")
-constantes = np.loadtxt("./gauss_nocol/constants.dat", usecols = 1)
-TAU = int(constantes[8])
+#dat = np.loadtxt("./gauss_nocol/grid0.dat").T
+##density = np.loadtxt("density.dat")
+#constantes = np.loadtxt("./gauss_nocol/constants.dat", usecols = 1)
+#TAU = int(constantes[8])
 
 Nt = 100
-x = np.linspace(0, 100*0.1/2, 100)
-u0tau0 = np.loadtxt("u0tau0.dat")
-u0tau1 = np.loadtxt("u1tau0.dat")
+x = np.linspace(0, 200*0.1/2, 200)
+
+#u0tau0 = np.loadtxt("u0tau0.dat")
+#u0tau1 = np.loadtxt("u1tau0.dat")
+#plt.figure()
+#plt.plot(x,u0tau0, linestyle = ':', label = 'u = 0')
+#plt.plot(x,u0tau1, linestyle = '--', label = 'u = $\\sigma$')
+#plt.legend()
+#plt.ylabel('$\\rho /\\bar{\\rho} - 1$', fontsize = 18)
+#plt.xlabel('Time [T]')
+#plt.title("Time invariance with $\\tau$ = 0")
+#plt.savefig("Jeans_test.png")
+
 plt.figure()
-plt.plot(x,u0tau0, linestyle = ':', label = 'u = 0')
-plt.plot(x,u0tau1, linestyle = '--', label = 'u = $\\sigma$')
-plt.legend()
-plt.ylabel('$\\rho /\\bar{\\rho} - 1$', fontsize = 18)
-plt.xlabel('Time [T]')
-plt.title("Time invariance with $\\tau$ = 0")
-
-
-
-plt.savefig("Jeans_test.png")
+test = np.loadtxt('JeansMagnitude.dat')
+test[0] = test[0]/test[0]
+plt.plot(x,test)
+plt.xlim(0,4)
+plt.ylabel('$A_2(t) / A_2(0)$')
+plt.yscale('log')
 
 
 #inF = np.loadtxt("inF.dat")
@@ -79,7 +85,7 @@ acceUnit = 3.5737451e-13 #km/s²
 
 
 
-condition = 'gauss'
+condition = 'jeans'
 if(condition == 'gauss'): 
       f = plt.figure(figsize= (7,11))
       to_Plot = [49,199]*3
