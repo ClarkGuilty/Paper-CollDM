@@ -32,11 +32,11 @@ dt = 0.4
 
 #dat = np.loadtxt("./gauss_nocol/grid0.dat").T
 ##density = np.loadtxt("density.dat")
-#constantes = np.loadtxt("./gauss_nocol/constants.dat", usecols = 1)
-#TAU = int(constantes[8])
+constantes = np.loadtxt("./gauss_nocol/constants.dat", usecols = 1)
+TAU = int(constantes[8])
 
 Nt = 100
-x = np.linspace(0, 200*0.1/2, 200)
+x = np.linspace(0, Nt*0.1/2, Nt)
 
 #u0tau0 = np.loadtxt("u0tau0.dat")
 #u0tau1 = np.loadtxt("u1tau0.dat")
@@ -55,6 +55,7 @@ test[0] = test[0]/test[0]
 plt.plot(x,test)
 plt.xlim(0,4)
 plt.ylabel('$A_2(t) / A_2(0)$')
+plt.xlabel('Time [T]')
 plt.yscale('log')
 
 

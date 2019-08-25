@@ -267,13 +267,28 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 
 
 \subsection{Test II: Jeans Instability}
-We initialize the phase space grid with a uniform density along with a periodic spatial perturbation and a Gaussian velocity profile:
+We initialize the phase space grid with a uniform density ($\bar{\rho}$) along with a small periodic spatial perturbation and a Gaussian velocity profile:
 \begin{equation}
 f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma^2}) (1 + A\cos(kx)).
 \end{equation} 
-In a phase space defined by the same domain of section \ref{sec: test_gauss}. This initialization is equivalent to a uniform distribution with a small periodic perturbation on $x = 0$. Depending on the value of $k$ the perturbations will collapse or will be wiped by Landau dampening. The critical behaviour is defined by the ratio of $k$ and $k_j$
+Where $A$ and $k$ are respectively the amplitude and frequency of the perturbation, and $\sigma$ is the velocity dispersion.
+The phase space is defined by $x \in [-L/2,L/2]$ and $v \in [-V,V]$. The idea behind this initialization is to trigger either the Jeans instability or Landau Dampening. The dynamics of the system is determined by the ratio $k/k_j$ with $k_j$ given by:
+\begin{equation}
+\label{eq: k_j}
+k_j^2 = \frac{4 \pi G \bar{\rho}}{\sigma^2}.
+\end{equation}
+If $k/k_j < 1$, the perturbations will trigger the Jeans instability and grow. If $k/k_j>1$, the perturbations will be erased by Landau dampening. We fix different values of $k/k_j$ and study the time evolution of the system. The dynamical time of the system is defined by:
+\begin{equation}
+T = (G \bar{\rho})^{-1/2},
+\end{equation}
+and it relates to the phase space domain by $V = L / T$. Without loss of generality, we fix $V = T = 1$, thus $L = 2$.
+Due the periodic boundary conditions on the spatial axis, we must ensure continuity on the boundaries, and thus:
+\begin{equation}
+k = \frac{2 \pi n}{L}.
+\end{equation}
+We chose $n=2$ and fix the amplitude of the perturbation $A= 0.03$. Lastly, we set the value of $k/k_j$ and calculate the velocity dispersion $\sigma$ accordingly. 
 
-
+TODO
 \section{Conclusions}
 
 TODO
