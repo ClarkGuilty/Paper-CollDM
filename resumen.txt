@@ -1,0 +1,12 @@
+La materia oscura tradicionalmente se simula utilizando métodos de N cuerpos que samplean el espacio de fase y resuelven la ecuación de Poisson-Vlasov.
+Este esquema está fuertemente motivado por la cosmología $\Lambda$CMD, en la cual la materia oscura es un fluido colisional frío.
+Sin embargo, a pesar de que el modelo ha sido bastante exitoso explicando propiedades del universo a gran escala, no logra reproducir propiedades observadas a escalas menores.
+En particular, el problema de las galaxias satélites faltantes y el problema "core-cusp", motivan la hipótesis de materia oscura débilmente interacturante.
+Además, mediciones recientes del resultado de colisiones entre cúmulos galácticos permiten restringir la sección eficaz de la potencial partícula de materia oscura.
+
+En este trabajo presentamos un método de integración directa para simular el espacio de fase de un fluido de materia oscura débilmente interactuante.
+El método consiste en resolver en un Lattice la ecuación de Boltzmann acoplada con la ecuación de Poisson.
+Como operador colisional se usó el operador de Bhatnagar-Gross-Krook (BGK).
+La fuerza de la interacción se cuantifica usando como parámetro libre el tiempo de relajación $\tau$, lo que permite simular tanto diferentes grados de colisionalidad, como materia oscura no colisional.
+El método se puede clasificar como una simulación de Lattice-Boltzmann, pero que utiliza el espacio completo de velocidad, en vez de unas pocas velocidades adventivas.
+El método no asume una partícula de materia oscura en partícular, es simpléctico, Lagrangiano, conservativo y no difusivo.
