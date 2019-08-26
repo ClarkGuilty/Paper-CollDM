@@ -1,4 +1,4 @@
-% CollisionalDarkMatter.tex 
+ % CollisionalDarkMatter.tex 
 %
 % Based in the LaTeX template for creating an MNRAS paper
 %
@@ -92,18 +92,18 @@ $^{1}$Departamento de F\'isica, Universidad de los Andes, Cra. 1 No. 18A-10 Edif
 
 % Abstract of the paper
 \begin{abstract}
-La materia oscura tradicionalmente se simula utilizando métodos de N cuerpos que samplean el espacio de fase y resuelven la ecuación de Poisson-Vlasov.
-Este esquema está fuertemente motivado por la cosmología $\Lambda$CMD, en la cual la materia oscura es un fluido colisional frío.
-Sin embargo, a pesar de que el modelo ha sido bastante exitoso explicando propiedades del universo a gran escala, no logra reproducir propiedades observadas a escalas menores.
-En particular, el problema de las galaxias satélites faltantes y el problema "core-cusp", motivan la hipótesis de materia oscura débilmente interacturante.
-Además, mediciones recientes del resultado de colisiones entre cúmulos galácticos permiten restringir la sección eficaz de la potencial partícula de materia oscura.
+%La materia oscura tradicionalmente se simula utilizando métodos de N cuerpos que samplean el espacio de fase y resuelven la ecuación de Poisson-Vlasov.
+%Este esquema está fuertemente motivado por la cosmología $\Lambda$CMD, en la cual la materia oscura es un fluido colisional frío.
+%Sin embargo, a pesar de que el modelo ha sido bastante exitoso explicando propiedades del universo a gran escala, no logra reproducir propiedades observadas a escalas menores.
+%En particular, el problema de las galaxias satélites faltantes y el problema "core-cusp", motivan la hipótesis de materia oscura débilmente interacturante.
+%Además, mediciones recientes del resultado de colisiones entre cúmulos galácticos permiten restringir la sección eficaz de la potencial partícula de materia oscura.
 
-En este trabajo presentamos un método de integración directa para simular el espacio de fase de un fluido de materia oscura débilmente interactuante.
-El método consiste en resolver en un Lattice la ecuación de Boltzmann acoplada con la ecuación de Poisson.
-Como operador colisional se usó el operador de Bhatnagar-Gross-Krook (BGK).
-La fuerza de la interacción se cuantifica usando como parámetro libre el tiempo de relajación $\tau$, lo que permite simular tanto diferentes grados de colisionalidad, como materia oscura no colisional.
-El método se puede clasificar como una simulación de Lattice-Boltzmann, pero que utiliza el espacio completo de velocidad, en vez de unas pocas velocidades adventivas.
-El método no asume una partícula de materia oscura en partícular, es simpléctico, Lagrangiano, conservativo y no difusivo.
+%En este trabajo presentamos un método de integración directa para simular el espacio de fase de un fluido de materia oscura débilmente interactuante.
+%El método consiste en resolver en un Lattice la ecuación de Boltzmann acoplada con la ecuación de Poisson.
+%Como operador colisional se usó el operador de Bhatnagar-Gross-Krook (BGK).
+%La fuerza de la interacción se cuantifica usando como parámetro libre el tiempo de relajación $\tau$, lo que permite simular tanto diferentes grados de colisionalidad, como materia oscura no colisional.
+%El método se puede clasificar como una simulación de Lattice-Boltzmann, pero que utiliza el espacio completo de velocidad, en vez de unas pocas velocidades adventivas.
+%El método no asume una partícula de materia oscura en partícular, es simpléctico, Lagrangiano, conservativo y no difusivo.
 
 
 
@@ -261,7 +261,7 @@ f(x,v,t = 0) = 4 exp(-\frac{-x^2-v^2}{0.08}),
 in a two dimensional phase space defined by $x \in [-1,1]$ and $v \in [-1,1]$.
 The biggest concentration of mass is on the spatial origin, therefore the potential minima is also on the origin.
 A matter package initially in a lattice cell representing a positive velocity will move in the positive direction of the spatial axis, negative velocities will move in the negative direction.
-Simultaneously, moving towards the potential minima increases rapidity, doing the opposite decreases rapidity.
+At the same time, moving towards the potential minima increases rapidity, doing the opposite decreases rapidity.
 The overall effect is the development of thin arms that turn into a spiral. Eventually, the spiral converges to a semi-stable distribution. Depending on the resolution of the simulation, the final state of the phase space looks like a very dense spiral, or a cloudy distribution.
 Since we are working in a two dimensional phase space, we are not limited by memory constrains. We use a lattice of size $2048^2$, thus being able to resolve the fine arm structure even at very later times.
 This test originated from \citet{2005MNRAS.359..123A}, who used it to test a cloudy Vlasov-Poisson solver, and has also being used by \citet{2014MNRAS.441.2414C} and \citet{integerLatticeDynamics} to test a waterbag solver and the collissionless version of this method respectively.
@@ -273,9 +273,8 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 
 
 \begin{figure}
-    \centering
     \includegraphics[scale=0.8]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
-    \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}
+    \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
     \label{fig: Gauss_test}
 \end{figure}
 
@@ -292,18 +291,20 @@ The phase space is defined by $x \in [-L/2,L/2]$ and $v \in [-V,V]$. The idea be
 \label{eq: k_j}
 k_j^2 = \frac{4 \pi G \bar{\rho}}{\sigma^2}.
 \end{equation}
-If $k/k_j < 1$, the perturbations will trigger the Jeans instability and grow. If $k/k_j>1$, the perturbations will be erased by Landau dampening. We fix different values of $k/k_j$ and study the time evolution of the system. The dynamical time of the system is defined by:
+If $k/k_j < 1$, the perturbations will trigger the Jeans instability and grow.
+If $k/k_j>1$, the perturbations will be erased by Landau dampening.
+We present results for $k/k_j$ = $0.5,1.5$ and study the time evolution of the system. The dynamical time of the system is defined by:
 \begin{equation}
 T = (G \bar{\rho})^{-1/2},
 \end{equation}
-and it relates to the phase space domain by $V = L / T$. Without loss of generality, we fix $V = T = 1$, thus $L = 2$.
+and it relates to the phase space domain by $V = L / T$. Without loss of generality, we fix $L = T = 2$, thus $V = 1$.
 Due the periodic boundary conditions on the spatial axis, we must ensure continuity on the boundaries, and thus:
 \begin{equation}
 k = \frac{2 \pi n}{L}.
 \end{equation}
-We chose $n=2$ and fix the amplitude of the perturbation $A= 0.03$. Lastly, we set the value of $k/k_j$ and calculate the velocity dispersion $\sigma$ accordingly. 
+We chose $n=2$, fix the amplitude of the perturbation $A= 0.03$, and calculate the velocity dispersion $\sigma$ accordingly. 
 
-TODO
+We t
 \section{Conclusions}
 
 TODO

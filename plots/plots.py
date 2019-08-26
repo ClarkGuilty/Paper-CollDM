@@ -32,9 +32,10 @@ dt = 0.4
 
 #dat = np.loadtxt("./gauss_nocol/grid0.dat").T
 ##density = np.loadtxt("density.dat")
-constantes = np.loadtxt("./gauss_nocol/constants.dat", usecols = 1)
+constantes = np.loadtxt("/home/clarkguilty/Paper-CollDM/plots/constants.dat", usecols = 1)
 TAU = int(constantes[8])
 
+dpII = 700
 Nt = 100
 x = np.linspace(0, Nt*0.1/2, Nt)
 
@@ -50,7 +51,7 @@ x = np.linspace(0, Nt*0.1/2, Nt)
 #plt.savefig("Jeans_test.png")
 
 plt.figure()
-test = np.loadtxt('JeansMagnitude.dat')
+test = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/JeansMagnitude.dat')
 test[0] = test[0]/test[0]
 plt.plot(x,test)
 plt.xlim(0,4)
@@ -58,6 +59,9 @@ plt.ylabel('$A_2(t) / A_2(0)$')
 plt.xlabel('Time [T]')
 plt.yscale('log')
 
+plt.title("Perturabación aleatoria \n$A_2$ vs t con $k_j = 2 \pi$ y $N=64$")
+
+plt.savefig('Jeans2Coef.png', dpi =dpII)
 
 #inF = np.loadtxt("inF.dat")
 #outF = np.loadtxt("outF0.dat")
@@ -78,7 +82,6 @@ constantes[0:4] = constantes[0:4]
 figu = plt.gcf()
 #figu.set_size_inches(18.5, 10.5)
 #figu.set_dpi(300)
-dpII = 700
 velUnit = 621 #m/s
 estUnit = 35 #kpc
 potUnit = 385962691092 #J/kg
