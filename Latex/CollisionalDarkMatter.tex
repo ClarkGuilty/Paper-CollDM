@@ -272,20 +272,16 @@ The thin arm structure is effectively resolved at time $t=5$ and the semi-stable
 
 
 
-\begin{figure}
-    \includegraphics[scale=0.8]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
-    \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
-    \label{fig: Gauss_test}
-\end{figure}
 
 
 
 \subsection{Test II: Jeans Instability}
+\label{sec: test_jeans}
 We initialize the phase space grid with a uniform density ($\bar{\rho}$) along with a small periodic spatial perturbation and a Gaussian velocity profile:
 \begin{equation}
-f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{v^2}{2 \sigma^2}) (1 + A\cos(kx)).
+f(x,v,t = 0) = \frac{\bar{\rho}}{(2\pi \sigma^2)^{1/2}} \exp(-\frac{(v-u)^2}{2 \sigma^2}) (1 + A\cos(kx)).
 \end{equation} 
-Where $A$ and $k$ are respectively the amplitude and frequency of the perturbation, and $\sigma$ is the velocity dispersion.
+Where $A$ and $k$ are respectively the amplitude and frequency of the perturbation, $u$ is the mean velocity, and $\sigma$ is the velocity dispersion.
 The phase space is defined by $x \in [-L/2,L/2]$ and $v \in [-V,V]$. The idea behind this initialization is to trigger either the Jeans instability or Landau Dampening. The dynamics of the system is determined by the ratio $k/k_j$ with $k_j$ given by:
 \begin{equation}
 \label{eq: k_j}
@@ -297,15 +293,48 @@ We present results for $k/k_j$ = $0.5,1.5$ and study the time evolution of the s
 \begin{equation}
 T = (G \bar{\rho})^{-1/2},
 \end{equation}
-and it relates to the phase space domain by $V = L / T$. Without loss of generality, we fix $L = T = 2$, thus $V = 1$.
+and it relates to the phase space domain by $V = L / T$. Without loss of generality, we fix $L = T = 1$, thus $V = 1$. 
+Additionally, we fix the mean velocity $u = 0$.
 Due the periodic boundary conditions on the spatial axis, we must ensure continuity on the boundaries, and thus:
 \begin{equation}
 k = \frac{2 \pi n}{L}.
 \end{equation}
 We chose $n=2$, fix the amplitude of the perturbation $A= 0.03$, and calculate the velocity dispersion $\sigma$ accordingly. 
 
-We t
+TODO: el test de Jeans per se. Ser\'ia mirar que la taza de crecimiento lineal (o de atenuamiento) sea paralela a la evoluci\'on de $A_2(t)/A_2(0)$.
+
+\subsection{Test III: Galilean invariance}
+Given the symplectic and Lagragian nature of the method, we expect it to assure Galilean invariance.
+In order to test the invariance, we initialize again the system to trigger the Jeans instability with the same parameters as in section \ref{sec: test_jeans} but using different mean velocity $u$.
+We ran simulations with $\tau$ = $\{0,\sigma, 2\sigma\}$.
+The perturbation size of the perturbation $\delta(x)$ is quantified by:
+\begin{equation}
+\delta(x) = \frac{\rho(x) -\bar{\rho}}{\bar{\rho}},
+\end{equation}
+and in terms of its Fourier power series:
+\begin{equation}
+\delta(x) = \sum_{m\geq0} A_m \exp(2i\pi m  x/L).
+\end{equation}
+Since we chose $n=2$ in $k$, the evolution of the second Fourier coefficient ($A_2$) will quantify the evolution of the initial perturbation, regardless of the phase of the wave.
+We plotted the evolution of $A_2(t)/A_2(0)$ for every run of the simulation in figure \ref{fig: Galilean_test}.
+We observe that regardless of the value of $u$ the behaviour of the Fourier coefficient is the same, thus testing successfully Galilean invariance.
+
+\begin{figure}
+    \includegraphics[scale=0.5]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
+    \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
+    \label{fig: Gauss_test}
+\end{figure}
 \section{Conclusions}
+
+
+\begin{figure}
+    \includegraphics[scale=0.5]{images/Jeans2Coef.png} %TODO cambiar color algo que funcione a escala de grices.
+    %\caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
+    \label{fig: Galilean_test}
+\end{figure}
+\section{Conclusions}
+
+
 
 TODO
 
