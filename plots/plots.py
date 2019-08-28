@@ -50,16 +50,29 @@ x = np.linspace(0, Nt*0.1/2, Nt)
 #plt.title("Time invariance with $\\tau$ = 0")
 #plt.savefig("Jeans_test.png")
 
-plt.figure()
-test = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/JeansMagnitude.dat')
-test[0] = test[0]/test[0]
-plt.plot(x,test)
-plt.xlim(0,4)
+plt.figure(figsize=[6.4, 4.8])
+#test = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/JeansMagnitude.dat')
+#test[0] = test[0]/test[0]
+#plt.plot(x,test)
+
+u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=0.dat')
+usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=sigma.dat')
+u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=2sigma.dat')
+u0[0] = u0[0]/u0[0]
+usigma[0] = usigma[0]/usigma[0]
+u2sigma[0] = u2sigma[0]/u2sigma[0]
+
+#plt.plot(x,u0, color = 'black')
+plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
+plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
+plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=300,label = '$A_2$ with u = $2\sigma$')
+plt.xlim(0,5)
 plt.ylabel('$A_2(t) / A_2(0)$')
 plt.xlabel('Time [T]')
 plt.yscale('log')
+plt.legend()
 
-plt.title("Perturabación aleatoria \n$A_2$ vs t con $k_j = 2 \pi$ y $N=64$")
+plt.title("Perturabación aleatoria \n$A_2$ vs t con $k_j = 2 \pi$ y $N=2048$")
 
 plt.savefig('Jeans2Coef.png', dpi =dpII)
 
