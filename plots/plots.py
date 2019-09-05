@@ -54,9 +54,9 @@ plt.figure(figsize=[6.4, 4.8])
 #test[0] = test[0]/test[0]
 #plt.plot(x,test)
 
-u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=0.dat')
-usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=sigma.dat')
-u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=2sigma.dat')
+u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=0.dat')
+usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=sigma.dat')
+u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=2sigma.dat')
 u0[0] = u0[0]/u0[0]
 usigma[0] = usigma[0]/usigma[0]
 u2sigma[0] = u2sigma[0]/u2sigma[0]
