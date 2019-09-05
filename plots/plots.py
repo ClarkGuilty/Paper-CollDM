@@ -17,9 +17,9 @@ rcParams.update({'figure.autolayout': True})
 #plt.rcParams['image.cmap'] = 'Blues'
 #plt.rcParams['image.cmap'] = 'YlGnBu'
 #plt.rcParams['image.cmap'] = 'plasma'
-plt.rcParams['image.cmap'] = 'YlOrRd'
-plt.rcParams['image.cmap'] = 'plasma'
-#plt.rcParams['image.cmap'] = 'OrRd'
+#plt.rcParams['image.cmap'] = 'YlOrRd'
+#plt.rcParams['image.cmap'] = 'plasma'
+plt.rcParams['image.cmap'] = 'magma'
 
 rc('text', usetex=True)
 rcParams.update({'font.size': 16})
@@ -39,8 +39,7 @@ dpII = 700
 Nt = 100
 x = np.linspace(0, Nt*0.1/2, Nt)
 
-#u0tau0 = np.loadtxt("u0tau0.dat")
-#u0tau1 = np.loadtxt("u1tau0.dat")
+
 #plt.figure()
 #plt.plot(x,u0tau0, linestyle = ':', label = 'u = 0')
 #plt.plot(x,u0tau1, linestyle = '--', label = 'u = $\\sigma$')
@@ -55,9 +54,9 @@ plt.figure(figsize=[6.4, 4.8])
 #test[0] = test[0]/test[0]
 #plt.plot(x,test)
 
-u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=0.dat')
-usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=sigma.dat')
-u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/u=2sigma.dat')
+u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=0.dat')
+usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=sigma.dat')
+u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau0kkj05/u=2sigma.dat')
 u0[0] = u0[0]/u0[0]
 usigma[0] = usigma[0]/usigma[0]
 u2sigma[0] = u2sigma[0]/u2sigma[0]
@@ -72,7 +71,7 @@ plt.xlabel('Time [T]')
 plt.yscale('log')
 plt.legend()
 
-plt.title("Perturabación aleatoria \n$A_2$ vs t con $k_j = 2 \pi$ y $N=2048$")
+plt.title("Perturabación periódica \n$A_2$ vs t con $k/k_j = 0.5$")
 
 plt.savefig('Jeans2Coef.png', dpi =dpII)
 
@@ -93,8 +92,7 @@ V = np.linspace(constantes[2], constantes[3], int(constantes[5]))
 #        
 constantes[0:4] = constantes[0:4]
 figu = plt.gcf()
-#figu.set_size_inches(18.5, 10.5)
-#figu.set_dpi(300)
+
 velUnit = 621 #m/s
 estUnit = 35 #kpc
 potUnit = 385962691092 #J/kg
@@ -102,36 +100,45 @@ acceUnit = 3.5737451e-13 #km/s²
 
 
 
-condition = 'jeans'
+condition = 'gauss'
 if(condition == 'gauss'): 
-      f = plt.figure(figsize= (7,11))
+      #f = plt.figure(figsize= (5,11))
+      f = plt.figure(figsize= (4,6))
       to_Plot = [49,199]*3
       folders = ['_nocol', '_tau8972', '_tau500']
       ylabels = ['Collisionless', '$\\tau = 8972$', '$\\tau = 500$']
       
       from mpl_toolkits.axes_grid1.axes_grid import ImageGrid
-      ax = ImageGrid(f, 111, nrows_ncols=(3,2), axes_pad = 0.2, cbar_mode = 'single', 
-                     cbar_pad=0.1, share_all=True,  )
+      ax = ImageGrid(f, 111, nrows_ncols=(2,3), axes_pad = 0.2, cbar_mode = 'single', 
+                     cbar_pad=0.1, share_all=True, aspect = True, direction= 'column')
       
-      ax[0].set_title(r"t = 5")
-      ax[1].set_title(r"t = 20")
+#      ax[0].set_title(r"t = 5")
+#      ax[4].set_title(r"t = 20")
+      ax[0].set_ylabel(r"t = 5")
+      ax[1].set_ylabel(r"t = 20")
+
+
+#      ax[0].set_aspect(0.5)
+#      ax[1].set_aspect(0.5)
+#      ax[2].set_aspect(0.5)
+#      ax[3].set_aspect(0.5)
       
       for i,j in zip(to_Plot,range(len(to_Plot))):
             dat = np.loadtxt("./"+condition+folders[j//2]+"/grid{:d}.dat".format(i)).T
-            
             #ax = f.add_subplot(subplots_index+j)   
-            im = ax[j].contourf(np.flip(dat, axis=1), levels = 5, vmin =0,
-              extent=[constantes[0],constantes[1],constantes[2],constantes[3]], aspect='auto') #Es mucho más rápido imshow
-            ax[j].set_xlim(constantes[0]/2, constantes[1]/2)
+            im = ax[j].contourf(np.flip(dat, axis=1), levels = 5, vmin =-1,
+              extent=[constantes[0]*5.2,constantes[1]*5.2,constantes[2],constantes[3]], aspect='auto') #Es mucho más rápido imshow
+            ax[j].set_xlim(constantes[0], constantes[1])
             ax[j].set_ylim(constantes[2]/2, constantes[3]/2)
-            ax[j].set_ylabel(ylabels[j//2])
+#            ax[j].set_ylabel(ylabels[j//2]) Descomentar para plot vertical
+            ax[j].set_xlabel(ylabels[j//2])
             
       ax.cbar_axes[0].colorbar(im)
-      ax.cbar_axes[0].set_aspect(30)
+      ax.cbar_axes[0].set_aspect(35)
       ax.axes_llc.set_xticks([])
       ax.axes_llc.set_yticks([])
       
-      f.savefig(condition+'.png', dpi = dpII)
+      f.savefig(condition+'.png', dpi = dpII, transparent=True)
 
 
 
