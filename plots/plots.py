@@ -54,27 +54,33 @@ plt.figure(figsize=[6.4, 4.8])
 #test[0] = test[0]/test[0]
 #plt.plot(x,test)
 
-u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=0.dat')
-usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=sigma.dat')
-u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/invarianceTau500kkj05/u=2sigma.dat')
-u0[0] = u0[0]/u0[0]
-usigma[0] = usigma[0]/usigma[0]
-u2sigma[0] = u2sigma[0]/u2sigma[0]
-
-#plt.plot(x,u0, color = 'black')
-plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
-plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
-plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=300,label = '$A_2$ with u = $2\sigma$')
-plt.xlim(0,5)
-plt.ylabel('$A_2(t) / A_2(0)$')
-plt.xlabel('Time [T]')
-plt.yscale('log')
-plt.legend()
-
-plt.title("Perturabación periódica \n$A_2$ vs t con $k/k_j = 0.5$")
-
-plt.savefig('Jeans2Coef.png', dpi =dpII)
-
+carpetas = ['invarianceTau0kkj05','invarianceTau0kkj11','invarianceTau500kkj05']
+taus = [r'$\infty$',r'$\infty$', '500']
+kas = ['0.5','1.1', '0.5']
+for carpeta, ttau, ka in zip(carpetas,taus,kas):
+      
+      fig = plt.figure(figsize=[6.4, 4.8])
+      u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=0.dat')
+      usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=sigma.dat')
+      u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=2sigma.dat')
+      u0[0] = u0[0]/u0[0]
+      usigma[0] = usigma[0]/usigma[0]
+      u2sigma[0] = u2sigma[0]/u2sigma[0]
+      
+      #plt.plot(x,u0, color = 'black')
+      plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
+      plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
+      plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=150,label = '$A_2$ with u = $2\sigma$')
+      plt.xlim(0,5)
+      plt.ylabel('$A_2(t) / A_2(0)$')
+      plt.xlabel('Time [T]')
+      plt.yscale('log')
+      plt.legend()
+      
+      plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
+      
+      plt.savefig(carpeta+'/Jeans2Coef.png', dpi =dpII)
+      plt.close(fig)
 #inF = np.loadtxt("inF.dat")
 #outF = np.loadtxt("outF0.dat")
 #outF1 = np.loadtxt("outF1.dat")
@@ -103,7 +109,7 @@ acceUnit = 3.5737451e-13 #km/s²
 condition = 'gauss'
 if(condition == 'gauss'): 
       #f = plt.figure(figsize= (5,11))
-      f = plt.figure(figsize= (4,6))
+      f = plt.figure(figsize= (6,8))
       to_Plot = [49,199]*3
       folders = ['_nocol', '_tau8972', '_tau500']
       ylabels = ['Collisionless', '$\\tau = 8972$', '$\\tau = 500$']
