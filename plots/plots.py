@@ -32,7 +32,7 @@ dt = 0.4
 
 #dat = np.loadtxt("./gauss_nocol/grid0.dat").T
 ##density = np.loadtxt("density.dat")
-constantes = np.loadtxt("/home/clarkguilty/Paper-CollDM/plots/constants.dat", usecols = 1)
+constantes = np.loadtxt("constants.dat", usecols = 1)
 TAU = int(constantes[8])
 
 dpII = 700
@@ -60,9 +60,9 @@ kas = ['0.5','1.1', '0.5']
 for carpeta, ttau, ka in zip(carpetas,taus,kas):
       
       fig = plt.figure(figsize=[6.4, 4.8])
-      u0 = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=0.dat')
-      usigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=sigma.dat')
-      u2sigma = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/'+carpeta+'/u=2sigma.dat')
+      u0 = np.loadtxt(carpeta+'/u=0.dat')
+      usigma = np.loadtxt(carpeta+'/u=sigma.dat')
+      u2sigma = np.loadtxt(carpeta+'/u=2sigma.dat')
       u0[0] = u0[0]/u0[0]
       usigma[0] = usigma[0]/usigma[0]
       u2sigma[0] = u2sigma[0]/u2sigma[0]
@@ -72,6 +72,7 @@ for carpeta, ttau, ka in zip(carpetas,taus,kas):
       plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
       plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=150,label = '$A_2$ with u = $2\sigma$')
       plt.xlim(0,5)
+      #plt.ylim(1e-4,10)
       plt.ylabel('$A_2(t) / A_2(0)$')
       plt.xlabel('Time [T]')
       plt.yscale('log')
