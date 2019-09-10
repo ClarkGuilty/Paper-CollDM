@@ -301,13 +301,14 @@ k = \frac{2 \pi n}{L}.
 \end{equation}
 We chose $n=2$, fix the amplitude of the perturbation $A= 0.03$, and calculate the velocity dispersion $\sigma$ accordingly. 
 
-TODO: el test de Jeans per se. Ser\'ia mirar que la taza de crecimiento lineal (o de atenuamiento) sea paralela a la evoluci\'on de $A_2(t)/A_2(0)$.
+%TODO: el test de Jeans per se. Ser\'ia mirar que la taza de crecimiento lineal (o de atenuamiento) sea paralela a la evoluci\'on de $A_2(t)/A_2(0)$.
 
 \subsection{Test III: Galilean invariance}
 Given the symplectic and Lagragian nature of the method, we expect it to assure Galilean invariance.
-In order to test the invariance, we initialize again the system to trigger the Jeans instability with the same parameters as in section \ref{sec: test_jeans} but using different mean velocity $u$.
-We ran simulations with $\tau$ = $\{0,\sigma, 2\sigma\}$.
-The perturbation size of the perturbation $\delta(x)$ is quantified by:
+To test it, we initialize the system in a Jeans instability with the same parameters as in section \ref{sec: test_jeans} but using different mean velocity $u$.
+We ran simulations with $u$ = $\{0,\sigma, 2\sigma\}$, for $k/k_j = 0.5$ and $k/k_j = 1.1$.
+However, due the boundary conditions on the velocity space we must reduce $\sigma$ in order to keep the %simulation stable in the run with $k/k_j = 1.1$.
+Due the periodicity of the perturbation, its size $\delta(x)$ is quantified by:
 \begin{equation}
 \delta(x) = \frac{\rho(x) -\bar{\rho}}{\bar{\rho}},
 \end{equation}
@@ -316,21 +317,22 @@ and in terms of its Fourier power series:
 \delta(x) = \sum_{m\geq0} A_m \exp(2i\pi m  x/L).
 \end{equation}
 Since we chose $n=2$ in $k$, the evolution of the second Fourier coefficient ($A_2$) will quantify the evolution of the initial perturbation, regardless of the phase of the wave.
-We plotted the evolution of $A_2(t)/A_2(0)$ for every run of the simulation in figure \ref{fig: Galilean_test}.
-We observe that regardless of the value of $u$ the behaviour of the Fourier coefficient is the same, thus testing successfully Galilean invariance.
+We observe for both $k/k_j = 0.5$ (figure \ref{fig: Galilean_test1}) and $k/k_j = 1.1$ (figure \ref{fig: Galilean_test2}) that regardless of the value of $u$ the evolution of the Fourier coefficient is the same, therefore the behavior of the perturbation is independent of the mean velocity of the system.
+Thus, successfully testing Galilean invariance.
+
 
 \begin{figure}
     \includegraphics[scale=0.5]{images/gauss.png} %TODO cambiar color algo que funcione a escala de grices.
     \caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
     \label{fig: Gauss_test}
 \end{figure}
-\section{Conclusions}
+
 
 
 \begin{figure}
     \includegraphics[scale=0.5]{images/Jeans2Coef.png} %TODO cambiar color algo que funcione a escala de grices.
     %\caption{Numerical test of Landau dampening for Gaussian initial conditions. We ran simulations with different values of $\tau$. All units are simulation units and have not being scaled for any astrophysical system in particular. It is easy to observe the thin arm structure mentioned in section \ref{sec: test_gauss}}.
-    \label{fig: Galilean_test}
+    \label{fig: Galilean_test1}
 \end{figure}
 \section{Conclusions}
 
