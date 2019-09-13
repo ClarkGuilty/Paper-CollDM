@@ -64,13 +64,13 @@ figu = plt.gcf()
 
 
 
-condition = 'dimensional_invariance'
+condition = 'dimensional_invariance05'
 #condition = 'conservation'
 #condition = 'gauss'
 #condition = 'galilean_invariance'
 
 
-if(condition == 'dimensional_invariance' ):
+if(condition == 'dimensional_invariance11' ):
     f = plt.figure(figsize= (6,5))
     t = np.linspace(0, Nt*dt,Nt)
 #    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
@@ -93,6 +93,30 @@ if(condition == 'dimensional_invariance' ):
     plt.title("Evolución de la energía condición Gaussiana")
     plt.savefig("sadGraph.png", dpi=dpII)    
     
+if(condition == 'dimensional_invariance05' ):
+    f = plt.figure(figsize= (6,5))
+    t = np.linspace(0, Nt*dt,Nt)
+#    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
+    t1024_2_4= np.loadtxt(condition+'/1024-2-4.dat', delimiter=';')
+    t2048_4_4= np.loadtxt(condition+'/2048-4-4.dat', delimiter=';')
+    t2048_2_1= np.loadtxt(condition+'/2048-2-1.dat', delimiter=';')
+    t4096_8_4= np.loadtxt(condition+'/4096-8-4.dat', delimiter=';')
+    
+    for arr in [t1024_2_4,t2048_4_4,t2048_2_1,t4096_8_4]:
+        arr[0] = arr[0]/arr[0]
+    
+    plt.plot(t, t1024_2_4, label = r'$N_v = 1024$ $k = 2 k_0$ $\bar{\rho} =4$')
+    plt.plot(t, t2048_4_4, label = r'$N_v = 2048$ $k = 4 k_0$ $\bar{\rho} =4$')
+    plt.plot(t, t2048_2_1, label = r'$N_v = 2048$ $k = 2 k_0$ $\bar{\rho} =1$')
+    plt.plot(t, t4096_8_4, label = r'$N_v = 4096$ $k = 8 k_0$ $\bar{\rho} =4$')
+    
+    plt.legend()
+    plt.xlabel("Time")
+    plt.ylabel("Energy")
+    plt.title("Evolución de la energía condición Gaussiana")
+    plt.savefig("sadGraph.png", dpi=dpII)    
+    
+
 
 if(condition == 'conservation' ):
     f = plt.figure(figsize= (6,5))
