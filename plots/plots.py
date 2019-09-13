@@ -21,6 +21,13 @@ rcParams.update({'figure.autolayout': True})
 #plt.rcParams['image.cmap'] = 'plasma'
 plt.rcParams['image.cmap'] = 'magma'
 
+
+def fmt(x, pos):
+    a, b = '{:.1e}'.format(x).split('e')
+    b = int(b)
+    return r'${} \times 10^{{{}}}$'.format(a, b)
+
+
 rc('text', usetex=True)
 rcParams.update({'font.size': 16})
 fsize = 16
@@ -30,8 +37,13 @@ JEANS = -137
 GAUSS = -127
 dt = 0.4
 
-#dat = np.loadtxt("./gauss_nocol/grid0.dat").T
-##density = np.loadtxt("density.dat")
+
+velUnit = 621 #m/s
+estUnit = 35 #kpc
+potUnit = 385962691092 #J/kg
+acceUnit = 3.5737451e-13 #km/s²
+
+
 constantes = np.loadtxt("constants.dat", usecols = 1)
 TAU = int(constantes[8])
 
@@ -40,59 +52,9 @@ Nt = 100
 x = np.linspace(0, Nt*0.1/2, Nt)
 
 
-#plt.figure()
-#plt.plot(x,u0tau0, linestyle = ':', label = 'u = 0')
-#plt.plot(x,u0tau1, linestyle = '--', label = 'u = $\\sigma$')
-#plt.legend()
-#plt.ylabel('$\\rho /\\bar{\\rho} - 1$', fontsize = 18)
-#plt.xlabel('Time [T]')
-#plt.title("Time invariance with $\\tau$ = 0")
-#plt.savefig("Jeans_test.png")
 
-plt.figure(figsize=[6.4, 4.8])
-#test = np.loadtxt('/home/clarkguilty/Paper-CollDM/plots/JeansMagnitude.dat')
-#test[0] = test[0]/test[0]
-#plt.plot(x,test)
 
-carpetas = ['invarianceTau0kkj05','invarianceTau0kkj11','invarianceTau500kkj05']
-taus = [r'$\infty$',r'$\infty$', '500']
-kas = ['0.5','1.1', '0.5']
-for carpeta, ttau, ka in zip(carpetas,taus,kas):
-      
-      fig = plt.figure(figsize=[6.4, 4.8])
-      u0 = np.loadtxt(carpeta+'/u=0.dat')
-      usigma = np.loadtxt(carpeta+'/u=sigma.dat')
-      u2sigma = np.loadtxt(carpeta+'/u=2sigma.dat')
-      u0[0] = u0[0]/u0[0]
-      usigma[0] = usigma[0]/usigma[0]
-      u2sigma[0] = u2sigma[0]/u2sigma[0]
-      
-      #plt.plot(x,u0, color = 'black')
-      plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
-      plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
-      plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=150,label = '$A_2$ with u = $2\sigma$')
-      plt.xlim(0,5)
-      #plt.ylim(1e-4,10)
-      plt.ylabel('$A_2(t) / A_2(0)$')
-      plt.xlabel('Time [T]')
-      plt.yscale('log')
-      plt.legend()
-      
-      plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
-      
-      plt.savefig(carpeta+'/Jeans2Coef.png', dpi =dpII)
-      plt.close(fig)
-#inF = np.loadtxt("inF.dat")
-#outF = np.loadtxt("outF0.dat")
-#outF1 = np.loadtxt("outF1.dat")
-#oI = np.loadtxt("oI.dat")
-#oR = np.loadtxt("oR.dat")
-#acce = np.loadtxt("acce.dat")
 
-def fmt(x, pos):
-    a, b = '{:.1e}'.format(x).split('e')
-    b = int(b)
-    return r'${} \times 10^{{{}}}$'.format(a, b)
 
 X = np.linspace(constantes[0], constantes[1], int(constantes[4]))  
 V = np.linspace(constantes[2], constantes[3], int(constantes[5]))  
@@ -100,14 +62,88 @@ V = np.linspace(constantes[2], constantes[3], int(constantes[5]))
 constantes[0:4] = constantes[0:4]
 figu = plt.gcf()
 
-velUnit = 621 #m/s
-estUnit = 35 #kpc
-potUnit = 385962691092 #J/kg
-acceUnit = 3.5737451e-13 #km/s²
 
 
+condition = 'dimensional_invariance'
+#condition = 'conservation'
+#condition = 'gauss'
+#condition = 'galilean_invariance'
 
-condition = 'gauss'
+
+if(condition == 'dimensional_invariance' ):
+    f = plt.figure(figsize= (6,5))
+    t = np.linspace(0, Nt*dt,Nt)
+#    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
+    t1024_2_4= np.loadtxt(condition+'/1024-2-4.dat', delimiter=';')
+    t2048_4_4= np.loadtxt(condition+'/2048-4-4.dat', delimiter=';')
+    t2048_2_1= np.loadtxt(condition+'/2048-2-1.dat', delimiter=';')
+    t4096_8_4= np.loadtxt(condition+'/4096-8-4.dat', delimiter=';')
+    
+    for arr in [t1024_2_4,t2048_4_4,t2048_2_1,t4096_8_4]:
+        arr[0] = arr[0]/arr[0]
+    
+    plt.plot(t, t1024_2_4, label = r'$N_v = 1024$ $k = 2 k_0$ $\bar{\rho} =4$')
+    plt.plot(t, t2048_4_4, label = r'$N_v = 2048$ $k = 4 k_0$ $\bar{\rho} =4$')
+    plt.plot(t, t2048_2_1, label = r'$N_v = 2048$ $k = 2 k_0$ $\bar{\rho} =1$')
+    plt.plot(t, t4096_8_4, label = r'$N_v = 4096$ $k = 8 k_0$ $\bar{\rho} =4$')
+    
+    plt.legend()
+    plt.xlabel("Time")
+    plt.ylabel("Energy")
+    plt.title("Evolución de la energía condición Gaussiana")
+    plt.savefig("sadGraph.png", dpi=dpII)    
+    
+
+if(condition == 'conservation' ):
+    f = plt.figure(figsize= (6,5))
+    t = np.linspace(0, Nt*dt,Nt)
+#    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
+    energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
+    plt.plot(t, energy[:,0], label = r'K')
+    plt.plot(t, energy[:,1], label = r'U')
+    plt.plot(t, energy[:,2], label = r'K+U')
+    plt.plot(t, energy[:,3], label = r'K-U')
+    plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
+    plt.legend()
+    plt.xlabel("Time")
+    plt.ylabel("Energy")
+    plt.title("Evolución de la energía condición Gaussiana")
+    plt.savefig("sadGraph.png", dpi=dpII)    
+    
+
+    
+
+if(condition == 'galilean_invariance'):
+    carpetas = ['invarianceTau0kkj05','invarianceTau0kkj11','invarianceTau500kkj05']
+    taus = [r'$\infty$',r'$\infty$', '500']
+    kas = ['0.5','1.1', '0.5']
+    for carpeta, ttau, ka in zip(carpetas,taus,kas):
+          
+        fig = plt.figure(figsize=[6.4, 4.8])
+        u0 = np.loadtxt(carpeta+'/u=0.dat')
+        usigma = np.loadtxt(carpeta+'/u=sigma.dat')
+        u2sigma = np.loadtxt(carpeta+'/u=2sigma.dat')
+        u0[0] = u0[0]/u0[0]
+        usigma[0] = usigma[0]/usigma[0]
+        u2sigma[0] = u2sigma[0]/u2sigma[0]
+          
+          #plt.plot(x,u0, color = 'black')
+        plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
+        plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
+        plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=150,label = '$A_2$ with u = $2\sigma$')
+        plt.xlim(0,5)
+        #plt.ylim(1e-4,10)
+        plt.ylabel('$A_2(t) / A_2(0)$')
+        plt.xlabel('Time [T]')
+        plt.yscale('log')
+        plt.legend()
+         
+        plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
+          
+        plt.savefig(carpeta+'/Jeans2Coef.png', dpi =dpII)
+plt.close(fig)
+
+
 if(condition == 'gauss'): 
       #f = plt.figure(figsize= (5,11))
       f = plt.figure(figsize= (6,8))
