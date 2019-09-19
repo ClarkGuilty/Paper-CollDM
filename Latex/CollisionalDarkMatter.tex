@@ -149,22 +149,23 @@ Here, we reproduce \citeauthor{integerLatticeDynamics} method and extend it by a
 
 \section{The Boltzmann Equation}
 \label{sec: boltzmann equation}
-The state of a stellar fluid can be described by the phase space density $\f$, which gives the mass of stellar fluid in the position $\vb*{r}$ with velocity $\vb*{v}$. The mass density is calculated by integration of the phase space density over the entire velocity space:
+The state of a fluid can be described by the phase space density $\f$, which gives the density of stellar fluid in the position $\vb*{r}$ with velocity $\vb*{v}$. The mass density is calculated by integration of the phase space density over the entire velocity space:
 \begin{equation}
 \dens = \int \f \dd[3]{\vb{v}}.
 \end{equation}
-The evolution of the phase space density is modelled by the Boltzmann equation:
+The evolution of the phase space density is modeled by the Boltzmann equation:
 \begin{equation}
 \label{eq: collisional_operator}
 \pdv{f}{t} + \vb*{v} \cdot \pdv{f}{\vb*{r}} - \pdv{\Phi}{\vb*{r}} \cdot \pdv{f}{\vb*{v}}  = C[f]  \text{.}
 \end{equation}
+Where $\Phi$ denotes the gravitational potential.
 The homogeneous solution to the left hand side corresponds to the collisionless Boltzmann equation -- also known as the Vlasov equation --, which is often used to simulate self-gravitating collisionless stellar systems \citep*{2001NewA....6...79S, 2013ApJ...762..116Y,2016MNRAS.455.1115H, integerLatticeDynamics}.
 The right hand side corresponds to the collisional operator, and quantifies the effect of collisions during the evolution of the phase space. Under the assumption of molecular equilibrium, $C$ is formally given by \citep{book:460703}:
 \begin{equation}
 C[f] = \int g I(g,\Omega) [f_\text{a}'f_\text{b}'-f_\text{a} f_\text{b}] \dd\Omega \dd[3] \vb*{v}_\text{a}
 \end{equation}
-where $I(g,\Omega)$ is the differential cross section for a pair of particles with relative velocity $\vb*{g} = g\vb*{\Omega}$, $f_\text{i} = f(\vb*{r},\vb*{v}_{\text{i}};t)$ represents the mass densities before the collisions, and $f_\text{i}' = f(\vb*{r},\vb*{v}_{\text{i}}';t)$ represents the densities after the collisions.
-The formal modelling of the collisional operator links the macroscopic effects with the microscopic world using the differential cross section $I$, which requires knowledge of the short range interactions between particles. In order to avoid the unknown parameters of the dark matter particle, and to keep the simulation general enough, we work with approximation schemes such as the BGK approximation.
+where $\Omega$ denotes the solid angle, $I(g,\Omega)$ the differential cross section for a pair of particles with relative velocity $\vb*{g} = g\vb*{\Omega}$, $f_\text{i} = f(\vb*{r},\vb*{v}_{\text{i}};t)$ represents the mass densities before the collisions, and $f_\text{i}' = f(\vb*{r},\vb*{v}_{\text{i}}';t)$ represents the densities after the collisions.
+The formal modelling of the collisional operator links the macroscopic effects with the microscopic world using the differential cross section $I$, which requires knowledge of the short range interactions between particles. In order to keep the simulation general enough, we work with the BGK approximation.
 The BGK operator quantifies collisions as a relaxation process towards \emph{local equilibrium} modelled by a relaxation time $\tau$:
 \begin{equation}
 \label{eq: bgk_operator}
