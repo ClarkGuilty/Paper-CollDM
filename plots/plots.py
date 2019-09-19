@@ -64,11 +64,11 @@ figu = plt.gcf()
 
 
 
-condition = 'dimensional_invariance05'
-#condition = 'conservation'
+#condition = 'dimensional_invariance05'
+condition = 'conservation'
 #condition = 'gauss'
 #condition = 'galilean_invariance'
-
+t = np.linspace(0, Nt*dt,Nt)
 
 if(condition == 'dimensional_invariance11' ):
     f = plt.figure(figsize= (6,5))
@@ -95,7 +95,7 @@ if(condition == 'dimensional_invariance11' ):
     
 if(condition == 'dimensional_invariance05' ):
     f = plt.figure(figsize= (6,5))
-    t = np.linspace(0, Nt*dt,Nt)
+    
 #    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
     t1024_2_4= np.loadtxt(condition+'/1024-2-4.dat', delimiter=';')
     t2048_4_4= np.loadtxt(condition+'/2048-4-4.dat', delimiter=';')
@@ -120,20 +120,30 @@ if(condition == 'dimensional_invariance05' ):
 
 if(condition == 'conservation' ):
     f = plt.figure(figsize= (6,5))
-    t = np.linspace(0, Nt*dt,Nt)
+    t = np.linspace(0, Nt*dt/2,Nt)
 #    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
     energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
-    plt.plot(t, energy[:,0], label = r'K')
-    plt.plot(t, energy[:,1], label = r'U')
-    plt.plot(t, energy[:,2], label = r'K+U')
-    plt.plot(t, energy[:,3], label = r'K-U')
+    U0 = energy[0][1]
+    plt.plot(t, energy[:,0]-U0, label = r'K')
+    plt.plot(t, energy[:,1]-U0, label = r'U')
+    plt.plot(t, energy[:,2]-U0, label = r'K+U')
     plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
     plt.legend()
     plt.xlabel("Time")
     plt.ylabel("Energy")
-    plt.title("Evolución de la energía condición Gaussiana")
-    plt.savefig("sadGraph.png", dpi=dpII)    
+    plt.title("Energy evolution Jeans instability")
+    plt.savefig("EvoJeans.png", dpi=dpII)  
+#    plt.close(f)
     
+    f = plt.figure(figsize= (6,5))
+    plt.xlabel("Time")
+    plt.ylabel("Energy")
+    plt.title("Energy evolution Jeans instability")
+    plt.savefig("EvoJeans.png", dpi=dpII)  
+    plt.plot(t, energy[:,4],)
+    plt.plot([t[0], t[-1]], [0, 0], color = 'black', label = r'$E_0$')
+  
+#    plt.close(f)
 
     
 
@@ -165,7 +175,7 @@ if(condition == 'galilean_invariance'):
         plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
           
         plt.savefig(carpeta+'/Jeans2Coef.png', dpi =dpII)
-plt.close(fig)
+        plt.close(fig)
 
 
 if(condition == 'gauss'): 
