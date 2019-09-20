@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy as sc
 import matplotlib.ticker as ticker
+
 from matplotlib import rc, rcParams
+from cycler import cycler
+
 rcParams.update({'figure.autolayout': True})
 
 #plt.rcParams['image.cmap'] = 'Blues'
@@ -13,6 +16,7 @@ rcParams.update({'figure.autolayout': True})
 #plt.rcParams['image.cmap'] = 'plasma'
 plt.rcParams['image.cmap'] = 'magma'
 
+plt.rcParams['axes.prop_cycle'] = cycler(color='bgrymyk')
 
 def fmt(x, pos):
     a, b = '{:.1e}'.format(x).split('e')
@@ -54,31 +58,155 @@ V = np.linspace(constantes[2], constantes[3], int(constantes[5]))
 f = plt.figure(figsize= (6,5))
 t = np.linspace(0, Nt*dt/2,Nt)
 
-  
-#    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
-run_char = condition.split(sep='-')
-if(run_char[1][0] == 'J'):
-    run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
-energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
-U0 = energy[0][1]
-plt.plot(t, energy[:,0]-U0, label = r'K')
-plt.plot(t, energy[:,1]-U0, label = r'U')
-plt.plot(t, energy[:,2]-U0, label = r'K+U')
-plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
-plt.legend()
-plt.xlabel("Time")
-plt.ylabel("Energy")
-plt.title("Energy evolution\nN = {}, $f_0$ = {}, $\\tau$ = {}".format(run_char[0], run_char[1], run_char[2]))
-plt.savefig(condition+"/energy.png", dpi=dpII)  
-#    plt.close(f)
+sep = '-'
+#for N in ['512','1024','2048','4096']:
+#    for inicial in ['J05']:
+#        for tau in ['0','500','8723']:
+#            f = plt.figure(figsize= (6,5))            
+#            condition = N+sep+inicial+sep+tau
+#            print(condition)
+#            ax1 = f.add_subplot(111)
+##    mass = np.loadtxt(condition+'/massEvolution.dat')[:,0]
+#            run_char = condition.split(sep='-')
+#            if(run_char[1][0] == 'J'):
+#                run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
+#            energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
+#            U0 = energy[0][1]
+#            U0 = 0
+##            plt.plot(t, energy[:,0]-U0, label = r'K')
+##            U = plt.plot(t, energy[:,1]-U0, label = r'U')
+#            E = plt.plot(t, energy[:,2]-U0, label = r'K+U')
+#            plt.ylabel("Energy")
+#            ax2 = f.add_subplot(111,sharex = ax1, frameon=False)
+#            ax2.yaxis.tick_right()
+#            ax2.yaxis.set_label_position("right")
+#            plt.scatter(t, energy[:,4], label = "$|E(t)/E(0)| - 1  $", marker = '+', color = 'r')
+##            plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
+#            handles1, labels1 = ax1.get_legend_handles_labels()
+#            handles2, labels2 = ax2.get_legend_handles_labels()
+#            handles = handles1+handles2
+#            labels = labels1+labels2
+#            ax2.legend(handles, labels, loc=3)
+#            plt.xlabel("Time")
+#            plt.ylabel("$|E(t)/E(0)| - 1  $")
+#            plt.title("Energy evolution\nN = {}, $f_0$ = {}, $\\tau$ = {}".format(run_char[0], run_char[1], run_char[2]))
+##            plt.savefig(condition+"/energy.png", dpi=dpII)  
+#            plt.savefig(condition+".png", dpi=dpII)  
+#            plt.close(f)
+            
+            
 
-f = plt.figure(figsize= (6,5))
-plt.xlabel("Time")
-plt.ylabel("$1 - E(t)/E(0)$")
-plt.title("Energy 'perturbation'")
-plt.plot(t, -energy[:,4],)
-plt.plot([t[0], t[-1]], [0, 0], color = 'black', label = r'$E_0$')
-plt.savefig(condition+"/pertur.png", dpi=dpII)  
+
+#for N in ['512','1024','2048','4096']:
+#    for inicial in ['J05', 'J11', 'Gauss']:
+#        f = plt.figure(figsize= (6,5))  
+#        ax1 = f.add_subplot(111)
+#        ax2 = f.add_subplot(111,sharex = ax1, frameon=False)
+#        ax2.yaxis.tick_right()
+#        ax2.yaxis.set_label_position("right")
+#        for tau in ['500','8723','0']:
+#            condition = N+sep+inicial+sep+tau
+#            print(condition)
+#            energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
+#            run_char = condition.split(sep='-')
+#            if(tau == '0'): tau = r'$\infty$'
+#            if(run_char[1][0] == 'J'):
+#                run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
+#            
+#            U0 = energy[0][1]
+##            U0 = 0
+#            E0 = energy[0][2]-U0
+#            ax1.plot(t, energy[:,2]-U0, label = r'$\tau =$ '+tau)
+#            
+#            handles1, labels1 = ax1.get_legend_handles_labels()
+#            handles2, labels2 = [], []
+##            ax2.scatter(t[::3], np.abs((energy[:,2][::3]-U0)/E0) - 1, label = r'$\tau =$ '+tau, marker = '+',)
+#            if(inicial=='J05' or inicial== 'J11'):
+#                ax2.scatter(t[::3], energy[:,4][::3], label = r'$\tau =$ '+tau, marker = '+',)
+##            plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
+#            
+#                handles2, labels2 = ax2.get_legend_handles_labels()
+#                handles = handles2
+#                labels = labels1+labels2
+#                ax2.legend(handles, labels, loc=3)
+#                ax2.set_ylabel("$|E(t)/E(0)| - 1  $")
+#            else:
+#                
+#                ax1.legend(handles1, labels1, )
+#            ax1.set_xlabel("Time")
+#            
+#            
+#            if(inicial[0] == 'G'): plt.axis('off')
+#            ax1.set_ylabel("Energy")
+#        plt.title("Energy evolution\nN = {}, $f_0$ = {}".format(run_char[0], run_char[1]))
+#        plt.savefig('n'+N+'-Evst-'+inicial+".png", dpi=dpII)  
+#        plt.close(f)
+#
+
+
+
+
+
+
+
+
+
+
+for tau in ['500','8723','0']:
+    tau0 = tau
+    for inicial in ['J05', 'J11', 'Gauss']:
+        f = plt.figure(figsize= (6,5))  
+        ax1 = f.add_subplot(111)
+        ax2 = f.add_subplot(111,sharex = ax1, frameon=False)
+        ax2.yaxis.tick_right()
+        ax2.yaxis.set_label_position("right")
+        for N in ['512','1024','2048','4096']:
+            condition = N+sep+inicial+sep+tau0
+            print(condition)
+            energy= np.loadtxt(condition+'/energyEvolution.dat', delimiter=';')
+            run_char = condition.split(sep='-')
+            if(tau == '0'): tau = r'$\infty$'
+            if(run_char[1][0] == 'J'):
+                run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
+            
+            U0 = energy[0][1]
+#            U0 = 0
+            E0 = energy[0][2]-U0
+            ax1.plot(t, energy[:,2]-U0, label = r'$N =$ '+N)
+            
+
+            ax2.scatter(t[::3], np.abs((energy[:,2][::3]-U0)/E0) - 1, label = r'$N =$ '+N, marker = '+',)
+#            plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
+            handles1, labels1 = ax1.get_legend_handles_labels()
+#            handles2, labels2 = ax2.get_legend_handles_labels()
+            handles = handles1
+            labels = labels1
+            ax1.legend(handles, labels, )
+            plt.xlabel("Time")
+            ax2.set_ylabel("$|E(t)/E(0)| - 1  $")
+#            plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
+#            plt.legend()
+#            plt.xlabel("Time")
+            ax1.set_ylabel("Energy")
+        plt.title("Energy evolution\n$\\tau$ = {}, $f_0$ = {}".format(tau, run_char[1]))
+        plt.savefig('t'+tau0+'-Evst-'+inicial+".png", dpi=dpII)  
+        plt.close(f)
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+#for N in 
+#    plt.close(f)
 
 
 
