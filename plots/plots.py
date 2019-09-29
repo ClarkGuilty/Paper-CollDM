@@ -65,9 +65,9 @@ figu = plt.gcf()
 
 
 #condition = 'dimensional_invariance05'
-condition = 'conservation'
 #condition = 'gauss'
-#condition = 'galilean_invariance'
+#condition = 'gauss'
+condition = 'galilean_invariance'
 t = np.linspace(0, Nt*dt,Nt)
 
 if(condition == 'dimensional_invariance11' ):
@@ -157,10 +157,10 @@ if(condition == 'galilean_invariance'):
         u0 = np.loadtxt(carpeta+'/u=0.dat')
         usigma = np.loadtxt(carpeta+'/u=sigma.dat')
         u2sigma = np.loadtxt(carpeta+'/u=2sigma.dat')
-        u0[0] = u0[0]/u0[0]
-        usigma[0] = usigma[0]/usigma[0]
-        u2sigma[0] = u2sigma[0]/u2sigma[0]
-          
+        u0 = u0/u0[0]
+        usigma = usigma/usigma[0]
+        u2sigma = u2sigma/u2sigma[0]
+        
           #plt.plot(x,u0, color = 'black')
         plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
         plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
