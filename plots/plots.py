@@ -157,10 +157,13 @@ if(condition == 'galilean_invariance'):
         u0 = np.loadtxt(carpeta+'/u=0.dat')
         usigma = np.loadtxt(carpeta+'/u=sigma.dat')
         u2sigma = np.loadtxt(carpeta+'/u=2sigma.dat')
-        u0 = u0/u0[0]
-        usigma = usigma/usigma[0]
-        u2sigma = u2sigma/u2sigma[0]
+#        u0 = u0/u0[0]
+#        usigma = usigma/usigma[0]
+#        u2sigma = u2sigma/u2sigma[0]
         
+        u0[0] = 1
+        usigma[0] = 1
+        u2sigma[0] = 1
           #plt.plot(x,u0, color = 'black')
         plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
         plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
@@ -172,9 +175,10 @@ if(condition == 'galilean_invariance'):
         plt.yscale('log')
         plt.legend()
          
-        plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
+#        plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
+        plt.title("Periodic perturbation $\\tau =$ "+ttau+"\n$A_2$ vs t for $k/k_j = $ "+ka)
           
-        plt.savefig(carpeta+'/Jeans2Coef.png', dpi =dpII)
+        plt.savefig(carpeta+'/t'+str(ttau)+'Jeans2Coef.png', dpi =dpII)
         plt.close(fig)
 
 
@@ -183,7 +187,7 @@ if(condition == 'gauss'):
       f = plt.figure(figsize= (6,8))
       to_Plot = [49,199]*3
       folders = ['_nocol', '_tau8972', '_tau500']
-      ylabels = ['Collisionless', '$\\tau = 8972$', '$\\tau = 500$']
+      ylabels = ['Collisionless', '$\\tau =$ $8972$', '$\\tau =$ $500$']
       
       from mpl_toolkits.axes_grid1.axes_grid import ImageGrid
       ax = ImageGrid(f, 111, nrows_ncols=(2,3), axes_pad = 0.2, cbar_mode = 'single', 
