@@ -65,9 +65,8 @@ figu = plt.gcf()
 
 
 #condition = 'dimensional_invariance05'
-#condition = 'gauss'
-#condition = 'gauss'
-condition = 'galilean_invariance'
+condition = 'gauss'
+#condition = 'galilean_invariance'
 t = np.linspace(0, Nt*dt,Nt)
 
 if(condition == 'dimensional_invariance11' ):
@@ -166,18 +165,20 @@ if(condition == 'galilean_invariance'):
         u2sigma[0] = 1
           #plt.plot(x,u0, color = 'black')
         plt.plot(x,u0, color = 'black', label = '$A_2$ with u = 0')
-        plt.scatter(x[::3],usigma[::3], marker='8', facecolors='red', edgecolors = 'none',label = '$A_2$ with u = $\sigma$')
-        plt.scatter(x[::3],u2sigma[::3], marker='.', edgecolors = 'green', facecolors= 'none', s=150,label = '$A_2$ with u = $2\sigma$')
+#        plt.scatter(x[::4],usigma[::4], marker='.', s = 130,label = '$A_2$ with u = $\sigma$')
+        plt.scatter(x[::6],usigma[::6], marker='.', s = 130,label = '$A_2$ with u = $\sigma$', color = 'darkblue')
+        plt.scatter(np.roll(x,3)[::6][1:],np.roll(u2sigma,3)[::6][1:], marker='*', edgecolors = 'tab:red', facecolors= 'darkred',label = '$A_2$ with u = $2\sigma$', s = 80)
         plt.xlim(0,5)
         #plt.ylim(1e-4,10)
         plt.ylabel('$A_2(t) / A_2(0)$')
         plt.xlabel('Time [T]')
         plt.yscale('log')
         plt.legend()
-         
+        
 #        plt.title("Perturabación periódica $\\tau = $"+ttau+"\n$A_2$ vs t con $k/k_j = $"+ka)
         plt.title("Periodic perturbation $\\tau =$ "+ttau+"\n$A_2$ vs t for $k/k_j = $ "+ka)
-          
+        
+        if(ttau == r'$\infty$') : ttau = '00'
         plt.savefig(carpeta+'/t'+str(ttau)+'Jeans2Coef.png', dpi =dpII)
         plt.close(fig)
 
@@ -186,9 +187,11 @@ if(condition == 'gauss'):
       #f = plt.figure(figsize= (5,11))
       f = plt.figure(figsize= (6,8))
       to_Plot = [49,199]*3
-      folders = ['_nocol', '_tau8972', '_tau500']
-      ylabels = ['Collisionless', '$\\tau =$ $8972$', '$\\tau =$ $500$']
-      
+      folders = ['_nocol', '_tau10000', '_tau500']
+      ylabels = ['Collisionless', '$\\tau =$ $10000$', '$\\tau =$ $500$']
+      colormap =  plt.cm.Reds
+#      colormap.set_under(color = 'white')
+      colormap.set_bad(color='black')
       from mpl_toolkits.axes_grid1.axes_grid import ImageGrid
       ax = ImageGrid(f, 111, nrows_ncols=(2,3), axes_pad = 0.2, cbar_mode = 'single', 
                      cbar_pad=0.1, share_all=True, aspect = True, direction= 'column')
@@ -197,7 +200,7 @@ if(condition == 'gauss'):
 #      ax[4].set_title(r"t = 20")
       ax[0].set_ylabel(r"t = 5")
       ax[1].set_ylabel(r"t = 20")
-
+      
 
 #      ax[0].set_aspect(0.5)
 #      ax[1].set_aspect(0.5)
@@ -206,11 +209,12 @@ if(condition == 'gauss'):
       
       for i,j in zip(to_Plot,range(len(to_Plot))):
             dat = np.loadtxt("./"+condition+folders[j//2]+"/grid{:d}.dat".format(i)).T
+            dat = np.ma.masked_where(dat < 0.05, dat)
             #ax = f.add_subplot(subplots_index+j)   
-            im = ax[j].contourf(np.flip(dat, axis=1), levels = 5, vmin =-1,
-              extent=[constantes[0]*5.2,constantes[1]*5.2,constantes[2],constantes[3]], aspect='auto') #Es mucho más rápido imshow
-            ax[j].set_xlim(constantes[0], constantes[1])
-            ax[j].set_ylim(constantes[2]/2, constantes[3]/2)
+            im = ax[j].contourf(np.flip(dat, axis=1), levels = 5,
+              extent=[constantes[0]*5.2,constantes[1]*5.2,constantes[2],constantes[3]], aspect='auto', cmap = colormap,vmin=0) #Es mucho más rápido imshow
+            ax[j].set_xlim(constantes[0]*1.3, constantes[1]*1.3)
+            ax[j].set_ylim(constantes[2]/1.3, constantes[3]/1.3)
 #            ax[j].set_ylabel(ylabels[j//2]) Descomentar para plot vertical
             ax[j].set_xlabel(ylabels[j//2])
             
