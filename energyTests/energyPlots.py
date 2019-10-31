@@ -174,16 +174,17 @@ for tau in ['0']:
 #        ax2 = f.add_subplot(111,sharex = ax1, frameon=False)
         #ax2.yaxis.tick_right()
         #ax2.yaxis.set_label_position("right")
-        for N1,N2,mark1,mark2 in zip(['512','1024'],['2048','4096'],['d','_'],[ '+','1']):
+        for N1,N2,mark1,mark2,color1,color2,sizes1 in zip(['512','1024'],['2048','4096'],['x','.'],[ '+','s'],['none','green'],['red','green'],[10,100]):
             condition1 = N1+sep+inicial+sep+tau0
             condition2 = N2+sep+inicial+sep+tau0
             print(condition1,condition2)
             energy1= np.loadtxt(condition1+'/energyEvolution.dat', delimiter=';')
             energy2= np.loadtxt(condition2+'/energyEvolution.dat', delimiter=';')
-            run_char = condition.split(sep='-')
-            if(tau == '0'): tau = r'$\infty$'
-            if(run_char[1][0] == 'J'):
-                run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
+            for condition in [condition1,condition2]:
+                run_char = condition.split(sep='-')
+                if(tau == '0'): tau = r'$\infty$'
+                if(run_char[1][0] == 'J'):
+                    run_char[1] = 'Jeans, $k/k_j$ = '+run_char[1][1]+'.'+run_char[1][2]
             
             U01 = energy1[0][1]
             U02 = energy2[0][1]
@@ -193,8 +194,8 @@ for tau in ['0']:
             #ax1.plot(t, energy[:,2]-U0, label = r'$N =$ '+N)
             
 
-            ax1.scatter(t[::6], np.abs((energy1[:,2][::6]-U01)/E01) - 1, label = r'$N =$ '+N1, marker = mark1,edgecolor='none')
-            ax1.scatter(np.roll(t[::6],3), np.abs((np.roll(energy2[:,2],3)[::6]-U02)/E02) - 1, label = r'$N =$ '+N2, marker = mark2,edgecolor='none')
+            ax1.scatter(t[::6], np.abs((energy1[:,2][::6]-U01)/E01) - 1, label = r'$N =$ '+N1, marker = mark1,edgecolor=color1, facecolor=color2,)
+            ax1.scatter(np.roll(t,3)[::6], np.abs((np.roll(energy2[:,2],3)[::6]-U02)/E02) - 1, label = r'$N =$ '+N2, marker = mark2,edgecolor='none')
 #            plt.plot([t[0], t[-1]], [energy[0,2], energy[0,2]], color = 'black', label = r'$E_0$')
             handles1, labels1 = ax1.get_legend_handles_labels()
 #            handles2, labels2 = ax2.get_legend_handles_labels()
@@ -209,7 +210,7 @@ for tau in ['0']:
             ax1.set_ylabel("Energy")
         plt.title("Energy evolution\n$\\tau$ = {}, $f_0$ = {}".format(tau, run_char[1]))
         plt.savefig('n'+tau0+'-Evst-'+inicial+".png", dpi=dpII)  
-        plt.close(f)
+#        plt.close(f)
 
 
 
